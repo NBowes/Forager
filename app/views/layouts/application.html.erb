@@ -13,7 +13,7 @@
     <div class='ui inverted menu'>
       <div class='right menu'>
       <% if current_user %>
-        Signed in as <%= current_user.name %> | <%= link_to "Logout", '/logout', class:'item' %>
+        <div class='item'>Signed in as &nbsp; | &nbsp; <%= link_to current_user.name, user_path(id: current_user.id) %> </div>| <%= link_to "Logout", '/logout', class:'item' %>
       <% else %>
         <%= link_to 'Login', '/login', class:'item' %> | <%= link_to 'Signup', '/signup',class:'item' %>
       <% end %>

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get "/maptest", to: 'pages#maptest'
 
   get '/signup' => 'users#new'
-  post '/users' => 'users#create'
+  # post '/users' => 'users#create'
+
+  resources :users,  only: [:create, :show, :update] 
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
