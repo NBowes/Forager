@@ -31,7 +31,12 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'hirb', '0.7.3'
+# Use Semantic for Sass framework + jquery
 gem 'semantic-ui-sass', '2.2.1.1'
+
+# Use paperclip for uploading User photo
+gem 'paperclip', '~> 5.0.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
