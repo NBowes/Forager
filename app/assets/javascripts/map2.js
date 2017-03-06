@@ -3,7 +3,7 @@ $('.ui.sticky')
     context: '#map'
   })
 ;
-
+$('.ui.page.dimmer').dimmer('show');
 
 $('.ui.dropdown').dropdown({
   onChange: function (val) {

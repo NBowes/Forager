@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
 
+  require 'net/http'
+
   def show
     @user = User.find(params[:id])
     @description = @user.description
+    @default_url = 'http://coastalhomes.ie/wp-content/uploads/2016/01/no.jpg'
   end
 
   def create
@@ -16,10 +19,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user = User.find(params[:id])
-    current_user.update(user_params)
+      current_user = User.find(params[:id])
+      current_user.update(user_params)
+      current_user.save
+      redirect_to user_path
+  end
+
+  def destroy
+    current_user.avatar = nil
     current_user.save
-    redirect_to user_path
   end
 
   private

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
   get "/map", to: 'pages#map'
+  
   get "/community", to: 'pages#community'
 
   # resources :pages, only: :create, as: "map"
