@@ -6,6 +6,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @description = @user.description
     @default_url = 'http://coastalhomes.ie/wp-content/uploads/2016/01/no.jpg'
+
+    @marker = Marker.find_by(params[@user.id])
   end
 
   def create
