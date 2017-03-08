@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # resources :pages, only: :create, as: "map"
 
   # post "/markers", to: 'pages#map'
-  resources :markers, only: [:create, :index]
+  resources :markers, only: [:create, :index, :destroy]
   # resources :markers
   # get "markers/index"
 

@@ -3,7 +3,7 @@
     <div class='ui center profile'>
     <% if gravatar?(current_user)%>
     <div class='ui two column grid profile-header'>
-      <div class='four wide column photo profile-header'>
+      <div class='six wide column photo profile-header'>
         <%= image_tag gravatar_url(current_user.email, 256), alt: "", class:'ui small circular image' %>
         <%= link_to 'Upload Photo', user_path, data:{no_turbolinks: 'true'},class:'mini ui button upload-photo' %>
         <div class='user-image'>
@@ -13,7 +13,7 @@
           <% end %>
         </div>
       </div>
-      <div class='twelve wide column info '>
+      <div class='ten wide column info '>
         <h1 class="header user">
           Welcome, <%= current_user.name %>!
         </h1>
@@ -24,7 +24,7 @@
     </div>
     <% elsif !current_user.avatar? %>
     <div class='ui two column grid profile-header'>
-      <div class='four wide column photo profile-header'>
+      <div class='six wide column photo profile-header'>
         <%= image_tag current_user.avatar, class:'ui small circular image'%>
         <%= link_to 'Upload Photo', user_path, data:{no_turbolinks: 'true'},class:'mini ui button upload-photo' %>
         <div class='user-image'>
@@ -34,7 +34,7 @@
           <% end %>
         </div>
       </div>
-      <div class='twelve wide column info'>
+      <div class='ten wide column info'>
         <h1 class="header user">
           Welcome, <%= current_user.name %>!
         </h1>
@@ -45,7 +45,7 @@
     </div>
     <% else %>
     <div class='ui two column grid profile-header'>
-      <div class='four wide column photo-column profile-header'>
+      <div class='six wide column photo-column profile-header'>
         <%= image_tag current_user.avatar, class:'ui small circular image'%>
         <%= link_to 'Upload Photo', user_path, data:{no_turbolinks: 'true'},class:'mini ui button upload-photo' %>
         <div class='user-image'>
@@ -55,7 +55,7 @@
           <% end %>
         </div>
       </div>
-      <div class='twelve wide column info'>
+      <div class='ten wide column info'>
         <h1 class="header user">
           Welcome, <%= current_user.name %>!
         </h1>
@@ -104,31 +104,30 @@
     <i class="tags icon"></i>
     My posts
   </h4>
+<div class="ui cards profile">
   <% if @marker.length == 0 %>
     You don't have any posts!
     <%= link_to 'Make a new post here', map_path %>
   <% else %>
     <% @marker.each do |marker| %>
-    <div class="ui cards profile">
     <div class="card">
       <div class="content">
         <div class="header">
           <%= marker.name %>
         </div>
         <div class="meta">
-          <%= marker.latitude %>
-          <%= marker.longitude %>
+          <%= marker.address %>
         </div>
         <div class="description">
           <%= marker.category %>
         </div>
       </div>
         <div class="extra content">
-          <div class="ui basic red button">Delete</div>
+          <%= button_to 'Delete', marker_path(marker), method: 'delete', class:'ui basic red button' %>
         </div>
       </div>
+              <% end %>
     </div>
-    <% end %>
   <% end %>
 </div>
 <%= javascript_include_tag 'users' %>

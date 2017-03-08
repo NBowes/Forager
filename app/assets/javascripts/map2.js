@@ -1,9 +1,12 @@
+
+$('.ui.page.dimmer').dimmer('show');
+
 $('.ui.sticky')
   .sticky({
     context: '#map'
   })
 ;
-$('.ui.page.dimmer').dimmer('show');
+
 
 $('.ui.dropdown').dropdown({
   onChange: function (val) {
@@ -15,6 +18,8 @@ $('.ui.dropdown').dropdown({
     filterByType(val)
     }
     }})
+
+
 
 
 
@@ -54,6 +59,9 @@ $('.fruit').state({
     .end()
   }})
 
+  $('.ui.page.dimmer')
+    .dimmer('show')
+  ;
 
     $('.button.all').state({
       onChange: function() {
@@ -122,6 +130,7 @@ var formattedAddress;
                 });
 
                 var markers = [];
+                console.log("markers in da house", markers);
 
                 searchBox.addListener('places_changed', function() {
                   var places = searchBox.getPlaces();
@@ -183,9 +192,35 @@ var formattedAddress;
                                   infowindow.setContent(document.getElementById('form'))
                                    infowindow.open( map, markerYo );
                                   });
-                                  infowindow.setContent("shoot")
-
                        })
+
+
+                       // markers are stored in an array of objects markers.
+                       var foundID = findID()
+
+                    //    function getID(id){
+                    //    var cardClick = document.getElementsByName(id)[0];
+                    //    google.maps.event.addDomListener(cardClick, 'click', function(){
+                    //       console.log("testing listener");
+                    //      console.log(id);
+                    //    })
+                    //  }
+
+                     function bounceMarker(marker){
+                       marker.setAnimation(google.maps.Animation.BOUNCE)
+                       console.log("bouncing");
+                     setTimeout(function(){ marker.setAnimation(null); }, 750);
+                   }
+
+                   function findMarker(staticID){
+                     for (var i = 0, length = markers.length; i < length; i++) {
+                       var currentMarkerID = markers[i].id
+                       if (currentMarkerID == staticID) {
+                         marker = markers[i]
+                         bounceMarker(marker)
+                       }
+                     }
+                   }
 
 
 
@@ -201,9 +236,14 @@ var formattedAddress;
 				position: latLng,
         map: map,
 				title: data.name,
-        category: data.category
+        category: data.category,
+        id: data.id
 			});
       markers.push(marker);
+
+
+
+
 
 
 			// Creating a closure to retain the correct data, notice how I pass the current data in the loop into the closure (marker, data)
@@ -211,7 +251,7 @@ var formattedAddress;
 
 				// Attaching a click event to the current marker
 				google.maps.event.addListener(marker, "click", function() {
-					infowindow.setContent("<div>"+ "Name: "+data.name+"<br>"+"Category: "+data.category+"<br>"+"Location: "+ marker.position);
+					infowindow.setContent("<div>"+ "Name: "+data.name+"<br>"+"Category: "+data.category+"<br>"+"Location: "+ data.address);
 					infowindow.open(map, marker);
 				});
         console.log("marker", marker);
@@ -221,6 +261,12 @@ var formattedAddress;
 
 		}
 
+    function findID() {
+      $('.card').on('click', function (e) {
+      var staticID = $(this).attr("name")
+      findMarker(staticID);
+      })
+    }
 
 
     saveData = function(){
@@ -233,12 +279,12 @@ var formattedAddress;
       var geocoder = new google.maps.Geocoder;
       geocoder.geocode({'location': latlng},
       function(results, status) {
-      formattedAddress = results[1].formatted_address
-        console.log(results[1].formatted_address);
+      formattedAddress = results[0].formatted_address
+        console.log(results[0].formatted_address);
         console.log("latlng"+ latlng);
         infowindow.setContent("<div>"+ "Name: "+name+"<br>"+"Category: "+category+"<br>"+"Location: "+formattedAddress)
         infowindow.open(map, markerYo)
-      })
+
 
 
       $.ajax({
@@ -252,14 +298,15 @@ var formattedAddress;
         "category": category,
         "longitude": latlng.lng(),
         "latitude": latlng.lat(),
-        "Address": formattedAddress
+        "address": formattedAddress
+
         //TODO: add formatted address
 
       }},
         success:function(data) { alert(JSON.stringify(data)); },
         error: function(data) { alert(JSON.stringify(data)); }
       })
-
+})
     }
 
 	}

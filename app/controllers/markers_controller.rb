@@ -20,6 +20,11 @@ def index
    @marker = Marker.all
  end
 
+ def destroy
+   @marker = Marker.find(params[:id])
+   @marker.destroy
+   redirect_to user_path(current_user)
+ end
 
 private
   def marker_params
