@@ -7,6 +7,7 @@ class MarkersController < ApplicationController
   def create
 
     @marker = Marker.new(marker_params)
+    @marker.user_id = current_user.id
     if @marker.save
       render :json => @marker
     else
